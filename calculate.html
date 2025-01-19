@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nutritionist App - Calculate</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #be9edb; /* Violet */
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .input-group {
+            width: 100%;
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        button {
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(90deg, #f78589, #f8a68f, #f79add);
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        }
+
+        .response, .uploaded-image {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: #8a2be2; /* Violet */
+            margin-bottom: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 15px;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculate Calories</h1>
+        <p>Upload an image to calculate the calories of your meal.</p>
+        <form action="/calculate" method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <input type="file" name="file" accept="image/jpeg, image/png" required>
+            </div>
+            <button type="submit">Tell me the total calories</button>
+        </form>
+
+        {% if response %}
+        <div class="response">
+            <h3>AI Response:</h3>
+            <p>{{ response }}</p>
+        </div>
+        {% endif %}
+
+        {% if image_data %}
+        <div class="uploaded-image">
+            <h3>Uploaded Image:</h3>
+            <img src="{{ image_data }}" alt="Uploaded Image" style="max-width: 100%; border-radius: 8px;">
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
